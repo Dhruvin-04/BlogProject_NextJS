@@ -20,8 +20,8 @@ export function Navbar() {
                 </div>
                 <div className='flex items-center gap-4'>
                     <Link className={`${buttonVariants({ variant: "ghost" })} text-xl`} href='/'>Home</Link>
-                    <Link className={`${buttonVariants({ variant: "ghost" })} text-xl`} href='/about'>About</Link>
                     <Link className={`${buttonVariants({ variant: "ghost" })} text-xl`} href='/blog'>Blog</Link>
+                    <Link className={`${buttonVariants({ variant: "ghost" })} text-xl`} href='/create'>Create</Link>
                 </div>
             </div>
             <div className='flex items-center gap-4'>
