@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         port: ''
       },
       {
+        hostname: 'unsplash-assets.imgix.net',
+        protocol: 'https',
+        port: ''
+      },
+      {
         hostname: 'mellow-meadowlark-778.convex.cloud',
         protocol: 'https',
         port: ''

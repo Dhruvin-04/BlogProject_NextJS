@@ -8,6 +8,8 @@ import { fetchQuery } from "convex/nextjs";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
+export const dynamic = 'force-static';
+
 export default async function BlogPage() {
 
     return (
