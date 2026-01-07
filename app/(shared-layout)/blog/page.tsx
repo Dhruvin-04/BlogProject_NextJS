@@ -33,7 +33,7 @@ async function LoadBlogs() {
                 <Card key={post._id} className="pt-0 h-113 relative">
                     <div className="w-full h-50 relative rounded overflow-hidden">
                         <Image
-                            src='https://plus.unsplash.com/premium_photo-1710119487366-ef814031eaf4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                            src={post.imageUrl ?? 'https://plus.unsplash.com/premium_photo-1710119487366-ef814031eaf4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
                             alt="Image"
                             fill
                             className="rounded-t-lg"

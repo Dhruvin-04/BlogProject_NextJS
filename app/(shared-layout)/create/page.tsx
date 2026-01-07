@@ -1,44 +1,34 @@
 'use client'
+import { createBlogAction } from '@/app/actions'
 import { blogSchema } from '@/app/schemas/blogSchema'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { api } from '@/convex/_generated/api'
-import { authClient } from '@/lib/auth-client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from 'convex/react'
 import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import React, { useTransition } from 'react'
+import { useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import z from 'zod'
 
 
 const page = () => {
 
     const [isPending, startTransition] = useTransition()
-    const mutation = useMutation(api.posts.createPost)
-    const router = useRouter()
 
     const form = useForm({
         resolver: zodResolver(blogSchema),
         defaultValues: {
             title: '',
-            content: ''
+            content: '',
+            image: undefined
         }
     })
 
     const onSubmit = (data: z.infer<typeof blogSchema>) => {
-        startTransition(() => {
-            mutation({
-                title: data.title,
-                body: data.content,
-            });
-            toast.success("Blog created succesfully")
-            router.push('/')
+        startTransition(async () => {
+           await createBlogAction(data)
         })
     }
 
@@ -68,6 +58,23 @@ const page = () => {
                                 <Field className='gap-y-2'>
                                     <FieldLabel>Content</FieldLabel>
                                     <Textarea className='h-30' aria-invalid={fieldState.invalid} placeholder='It was 31 dec 2025 ....' {...field} />
+                                    {fieldState.invalid && (
+                                        <FieldError errors={[fieldState.error]} />
+                                    )}
+                                </Field>
+                            )} />
+                            <Controller name='image' control={form.control} render={({ field, fieldState }) => (
+                                <Field className='gap-y-2'>
+                                    <FieldLabel>Image</FieldLabel>
+                                    <Input aria-invalid={fieldState.invalid}
+                                        type='file'
+                                        accept='image/*'
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0]
+                                            field.onChange(file)
+                                        }}
+
+                                    />
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
