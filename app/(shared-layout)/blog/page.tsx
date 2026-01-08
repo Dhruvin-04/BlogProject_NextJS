@@ -7,8 +7,14 @@ import Link from "next/link";
 import { fetchQuery } from "convex/nextjs";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Metadata } from "next";
 
 export const dynamic = 'force-static';
+
+export const metadata: Metadata = {
+  title: 'Blogs | NextJS',
+  description: 'Get different thoughts, visions, insights from all across the world',
+}
 
 export default async function BlogPage() {
 

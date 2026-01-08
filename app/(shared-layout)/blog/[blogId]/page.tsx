@@ -1,10 +1,14 @@
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { CommentSection } from "@/components/web_utils/CommentSection"
+import Presence from "@/components/web_utils/Presence"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
+import { getToken } from "@/lib/auth-server"
 import { fetchQuery, preloadQuery } from "convex/nextjs"
+import { ConvexError } from "convex/values"
 import { ArrowLeft } from "lucide-react"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -14,13 +18,33 @@ interface BlogUserProps {
     }>
 }
 
+export async function generateMetadata({ params }: BlogUserProps): Promise<Metadata> {
+  const { blogId } = await params
+  const data = await fetchQuery(api.posts.getUserData, { postId: blogId })
+  if(!data || data === undefined){
+    return{
+        title: 'Blog Not Found'
+    }
+  }
+  return {
+    title: `Blog | ${data?.title}`,
+    description: data.body,
+  }
+}
+
 export default async function BlogUser({ params }: BlogUserProps) {
     const { blogId } = await params
 
-    const [post, preloadedComments] = await Promise.all([
+    const token = await getToken()
+    const [post, preloadedComments, user] = await Promise.all([
         await fetchQuery(api.posts.getUserData, { postId: blogId }),
-        await preloadQuery(api.comment.getCommentbyPost, { postId: blogId })
+        await preloadQuery(api.comment.getCommentbyPost, { postId: blogId }),
+        await fetchQuery(api.presence.getUserById, {}, {token})
     ])
+
+    if(!user){
+        throw new ConvexError('Unauthorized')
+    }
     
 
     if (!post) {
@@ -42,7 +66,10 @@ export default async function BlogUser({ params }: BlogUserProps) {
             </div>
             <div className="flex flex-col gap-3">
                 <h1 className="text-3xl font-bold tracking-tight mt-4">{post?.title}</h1>
-                <p className="text-muted-foreground">Posted on: {new Date(post._creationTime).toLocaleDateString("en-US")}</p>
+                <div className="flex gap-5">
+                    <p className="text-muted-foreground">Posted on: {new Date(post._creationTime).toLocaleDateString("en-US")}</p>
+                    <Presence roomId={blogId} userId={user.name}/>
+                </div>
             </div>
             <Separator className="my-8" />
             <div className="text-lg text-muted-foreground/80 whitespace-pre-wrap leading-relaxed">
