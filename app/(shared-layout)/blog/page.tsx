@@ -27,9 +27,9 @@ export default async function BlogPage() {
                 <p className="text-muted-foreground text-lg mt-1">Thoughts, Insights, Stories from all across the World!</p>
             </div>
 
-        {/* <Suspense fallback={blogSkeleton()}> */}
+        <Suspense fallback={blogSkeleton()}>
             <LoadBlogs/>
-        {/* </Suspense> */}
+        </Suspense>
 
         </div>
     )
