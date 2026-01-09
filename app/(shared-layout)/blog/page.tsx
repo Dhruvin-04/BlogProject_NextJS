@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
 
 //export const dynamic = 'force-static';
 
@@ -35,9 +36,10 @@ export default async function BlogPage() {
 }
 
 async function LoadBlogs() {
-    'use cache'
-    cacheLife('hours')
-    cacheTag('blog')
+    // 'use cache'
+    // cacheLife('hours')
+    // cacheTag('blog')
+    await connection()
     const data = await fetchQuery(api.posts.getPost)
     return (
         < div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3 mt-10" >
