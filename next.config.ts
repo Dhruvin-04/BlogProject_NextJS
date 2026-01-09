@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
         port: ''
       },
       {
-        hostname: 'mellow-meadowlark-778.convex.cloud',
+        hostname: 'descriptive-antelope-846.convex.cloud',
         protocol: 'https',
         port: ''
       }
