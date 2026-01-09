@@ -23,7 +23,7 @@ export default async function BlogPage() {
         <div className="py-12 w-full">
             <div className="text-center">
                 <h1 className="text-6xl tracking-tight font-extrabold">OUR BLOGS</h1>
-                <p className="text-muted-foreground text-lg mt-1">Thoughts, Insights, Stories all across the World!</p>
+                <p className="text-muted-foreground text-lg mt-1">Thoughts, Insights, Stories from all across the World!</p>
             </div>
 
         {/* <Suspense fallback={blogSkeleton()}> */}
