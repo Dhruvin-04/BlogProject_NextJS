@@ -8,8 +8,9 @@ import { fetchQuery } from "convex/nextjs";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 
-export const dynamic = 'force-static';
+//export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
   title: 'Blogs | NextJS',
@@ -25,15 +26,18 @@ export default async function BlogPage() {
                 <p className="text-muted-foreground text-lg mt-1">Thoughts, Insights, Stories all across the World!</p>
             </div>
 
-        <Suspense fallback={blogSkeleton()}>
+        {/* <Suspense fallback={blogSkeleton()}> */}
             <LoadBlogs/>
-        </Suspense>
+        {/* </Suspense> */}
 
         </div>
     )
 }
 
 async function LoadBlogs() {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('blog')
     const data = await fetchQuery(api.posts.getPost)
     return (
         < div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3 mt-10" >
