@@ -36,6 +36,7 @@ const page = () => {
                     onSuccess: () => {
                         toast.success("Account created succesfully")
                         router.push('/')
+                        router.refresh()
                     },
                     onError: (error) => {
                         toast.error(error.error.message)

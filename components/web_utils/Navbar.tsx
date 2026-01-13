@@ -33,6 +33,7 @@ export function Navbar() {
                             onSuccess: ()=>{
                                 toast.success("Logged out succesfully")
                                 router.push('/')
+                                router.refresh()
                             },
                             onError:(error)=>{
                                 toast.error(error.error.message)

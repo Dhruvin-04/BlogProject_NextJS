@@ -1,7 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { api } from "@/convex/_generated/api"
-import { useQuery } from "convex/react"
+import { api } from "@/convex/_generated/api";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchQuery } from "convex/nextjs";
@@ -9,9 +8,10 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
-import { connection } from "next/server";
+import { getToken } from "@/lib/auth-server";
+import { redirect } from "next/navigation";
 
-//export const dynamic = 'force-static';
+// export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Blogs | NextJS',
@@ -19,6 +19,12 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
+
+    const token = await getToken()
+    const user = await fetchQuery(api.presence.getUserById, {}, {token})
+    if(!user){
+        return redirect('/auth/login')
+    }
 
     return (
         <div className="py-12 w-full">

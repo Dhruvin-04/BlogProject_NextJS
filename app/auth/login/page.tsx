@@ -34,6 +34,7 @@ const page = () => {
                     onSuccess: () => {
                         toast.success("Logged in succesfully")
                         router.push('/')
+                        router.refresh()
                     },
                     onError: (error) => {
                         toast.error(error.error.message)
