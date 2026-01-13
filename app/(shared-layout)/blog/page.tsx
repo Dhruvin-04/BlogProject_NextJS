@@ -20,11 +20,11 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
 
-    const token = await getToken()
-    const user = await fetchQuery(api.presence.getUserById, {}, {token})
-    if(!user){
-        return redirect('/auth/login')
-    }
+    // const token = await getToken()
+    // const user = await fetchQuery(api.presence.getUserById, {}, {token})
+    // if(!user){
+    //     return redirect('/auth/login')
+    // }
 
     return (
         <div className="py-12 w-full">
