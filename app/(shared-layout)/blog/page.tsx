@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
 
-    const token = await getToken()
-    const user = await fetchQuery(api.presence.getUserById, {}, {token})
-    if(!user){
-        return redirect('/auth/login')
-    }
+    // const token = await getToken()
+    // const user = await fetchQuery(api.presence.getUserById, {}, {token})
+    // if(!user){
+    //     return redirect('/auth/login')
+    // }
 
     return (
         <div className="py-12 w-full">
@@ -34,9 +34,9 @@ export default async function BlogPage() {
                 <p className="text-muted-foreground text-lg mt-1">Thoughts, Insights, Stories from all across the World!</p>
             </div>
 
-        {/* <Suspense fallback={blogSkeleton()}> */}
+        <Suspense fallback={blogSkeleton()}>
             <LoadBlogs/>
-        {/* </Suspense> */}
+        </Suspense>
 
         </div>
     )
